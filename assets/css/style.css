@@ -182,6 +182,7 @@ li{
   color: var(--secondary_color);
   margin-bottom: 16px;
   text-transform: uppercase;
+  color: white;
 }
 .d2c_subtitle{
   font-size: 24px;
@@ -303,10 +304,9 @@ body .d2c_mobile_view {
 /* ========================== hero section start ============================ */
 .d2c_hero{
   background-color: var(--secondary_color);
-  background-image: url(../images/hero_bg.png);
-  background-repeat: no-repeat;
+ 
   background-position: left center;
-  padding: 0px;
+  padding: 60px;
 }
 .d2c_hero_content{
   padding:10px 10px 10px 0px;
@@ -364,7 +364,7 @@ body .d2c_mobile_view {
   position: relative;
   background: #EAFBF2;
   padding: 20px 20px 0px 20px;
-  border-top-right-radius: 50px;
+  border-top-right-radius: 0px;
 }
 .d2c_about_left .d2c_about_profile_image{
   border-top-right-radius: 50px;
@@ -726,6 +726,11 @@ body .d2c_mobile_view {
 
 
 /* ==========contact section start========== */
+
+.the_background {
+  background: linear-gradient(0deg, rgba(9, 29, 66, 0.96), rgba(9, 29, 66, 0.96));
+}
+
 .d2c_contact{
   padding-top: 0px;
 }
@@ -905,6 +910,10 @@ body .d2c_mobile_view {
   border-color: var(--primary_color);
   color: var(--primary_color);
   transition: 0.4s all ease;
+}
+
+.text_color {
+  color: #B5BBC6;
 }
 
 /* ========================== bottom to top scroll end ============================ */
