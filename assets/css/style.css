@@ -182,7 +182,6 @@ li{
   color: var(--secondary_color);
   margin-bottom: 16px;
   text-transform: uppercase;
-  color: white;
 }
 .d2c_subtitle{
   font-size: 24px;
@@ -914,6 +913,17 @@ body .d2c_mobile_view {
 
 .text_color {
   color: #B5BBC6;
+}
+
+.text_color_touch {
+  color: white;
+  text-align: center;
+}
+
+.d2c_footer_content h4 {
+  color: var(--primary_color);
+  text-transform: uppercase;
+  margin-bottom: 10px;
 }
 
 /* ========================== bottom to top scroll end ============================ */
