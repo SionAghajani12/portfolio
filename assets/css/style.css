@@ -191,7 +191,7 @@ li{
 
 /* navbar */
 .navbar-brand{
-  width: 86px;
+  width: 150px;
 }
 .d2c_navbar{
   background: var(--secondary_color);
@@ -699,10 +699,16 @@ body .d2c_mobile_view {
   transition: .4s all ease;
   height: 100%;
 }
+
 .d2c_awards_column{
   padding: 10px;
 }
 .d2c_awards_card h3{
+  margin-bottom: 10px;
+  transition: .4s all ease;
+}
+
+.d2c_awards_card a{
   margin-bottom: 10px;
   transition: .4s all ease;
 }
