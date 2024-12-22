@@ -183,6 +183,17 @@ li{
   margin-bottom: 16px;
   text-transform: uppercase;
 }
+
+.d2c_title_main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0px 0; /* Adjust this value as needed */
+  padding: 0 20px; /* Optional padding for responsiveness */
+}
+
 .d2c_subtitle{
   font-size: 24px;
   text-transform: capitalize;

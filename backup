@@ -1,0 +1,43 @@
+<div class="row">
+					<div class="col-md col-lg d2c_about_left_column order-2 order-md-1 d-md-none d-lg-flex align-items-end">
+						</div>
+					</div>
+					<div>
+						<div>
+							<h2 class="d2c_title">know me more</h2>
+							<p>I am a cybersecurity engineer based in Armenia with 4+ year experience in this field, passionate about penetration testing, network administration, creating cybersecurity tools, and exploring new technologies and tools in the field of cybersecurity.</p>
+							<div class="d2c_about_key_points">
+								<h3 class="position-relative mb-0">Unicomp CJSC</h3>
+								<h4 class="position-relative mb-0">Cyber Security Engineer</h4>
+								<p class="mb-0">Jun 2024 - Present</p>
+								<p class="">Yerevan, Armenia</p>
+								<p>Unicomp provides mission-critical services and solutions, including DDoS protection, SIEM, network monitoring, web application firewalls, and more.</p>
+							</div>
+							<div class="d2c_about_key_points">
+								<h3 class="position-relative mb-0">Humanize CJSC</h3>
+								<h4 class="position-relative mb-0">Cyber Security Engineer</h4>
+								<p class="mb-0">Feb 2023 - Feb 2025</p>
+								<p class="">Yerevan, Armenia</p>
+								<p>Humanize is an innovative and data-conscious company transforming the cybersecurity landscape across various industries. With our cyber AI technology, we empower decision-makers to get a comprehensive view of their company’s cyber condition and be one step ahead of adversaries that target them to compromise.</p>
+							</div>
+							<div class="d2c_about_key_points">
+								<h3 class="position-relative mb-0">SoftConstruct</h3>
+								<h4 class="position-relative mb-0">Cyber security engineer</h4>
+								<p class="mb-0">Nov 2022 - Feb 2023</p>
+								<p class="">Yerevan, Armenia</p>
+								<p>SoftConstruct is a leading company in the Betting and Casino industry, specializing in innovative gaming solutions and online platforms.</p>
+							</div>
+							<div class="d2c_about_key_points">
+								<h3 class="position-relative mb-0">Inecobank CJSC</h3>
+								<h4 class="position-relative mb-0">Information Security Administrator</h4>
+								<p class="mb-0">Oct 2021 - Jan 2023</p>
+								<p class="">Yerevan, Armenia</p>
+								<p>Inecobank is a leading Armenian commercial bank, offering a wide range of financial services, including retail, corporate, and digital banking solutions.</p>
+							</div>
+							<div class="d2c_about_key_points">
+								
+							</div>
+							
+						</div>
+						
+					</div>
