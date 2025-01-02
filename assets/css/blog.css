@@ -9930,3 +9930,8 @@ h3 {
   display: block;
   margin-top: 35px;
 }
+
+.small-gap-for-dots{
+  display: block;
+  margin-top: 15px;
+}
