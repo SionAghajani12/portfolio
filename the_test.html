@@ -1,0 +1,43 @@
+<div class="container">
+    <div>
+        <div>
+            <h2>Password Attacks:Credential Hunting in Linux</h2>
+            <p>It&rsquo;s time for another step-by-step walkthrough of an interesting challenge! My posts typically focus on challenges where I see the community struggling and unable to find real answers to their questions. These challenges are often very difficult for people to solve.</p>
+            <p>In this case, the focus is on a question from <strong>Password Attacks: Credential Hunting in Linux</strong>.</p>
+        </div>
+    </div>
+
+    <div>
+        <h2>Question: Examine the target and find out the password of the user Will. Then, submit the password as the answer.</h2>
+        <p>To solve this challenge, we need to rely on the hint, as it is nearly impossible to solve without it. After conducting extensive research, I discovered that the solution is incredibly difficult to figure out without the provided hint.</p>
+        <blockquote>
+            <em>
+                <p><strong>Hint:</strong> Sometimes, we will not have any initial credentials available, and as a last step, we may need to brute-force the credentials of available services to gain access. From other hosts on the network, our colleagues identified the user <strong>Kira</strong>, who, in most cases, had SSH access to other systems with the password <strong>LoveYou1</strong>. For simplicity, a prepared list of passwords has already been provided in the <strong>Resources</strong> section.</p>
+            </em>
+        </blockquote>
+        <p>If you notice, I have highlighted the username and the password. The hint suggests that the <strong>username</strong> is <strong>Kira</strong>, supposedly used on other hosts to log in via SSH. However, not every hint is 100% accurate. With just a bit of research, we can determine that SSH does not allow authentication for usernames with uppercase letters!</p>
+        <p>Now that we know this, let us use <strong>kira</strong> (lowercase) instead and authenticate using the given password. After attempting this, we see that it is not a valid password. At this point, we can start customizing and generating new passwords based on the provided password hint using <strong>Hashcat</strong>.</p>
+        <h2>Generating new passwords:</h2>
+        <p>First, we need to download the wordlist provided by Hack The Box in the “Resources” section.</p>
+        <figure>
+            <img src="https://miro.medium.com/v2/resize:fit:1400/1*WYZ346ysAiGxzFNCIZmwcQ.png" alt="Wordlist Screenshot">
+            <figcaption>Next to the Title.</figcaption>
+        </figure>
+        <p>After downloading it we unzip the folder.</p>
+        <p>Command: unzip &lt;foldernamer.zip&gt;</p>
+        <p>after unzipping the folder we have:<br>- <em>custom.rule<br>- password.list<br>- username.list</em></p>
+        <p>We already know the username so no need to generate new username lists so we will begin with the passwords.</p>
+        <p><strong>Tool: Hashcat<br>Command:</strong> hashcat --force password.List -r /home/kali/Downloads/ssh-password/custom.rule --stdout | sort -u > mut_kira_password.list</p>
+
+        <h1>Explanation of Arguments:</h1>
+        <p><code>hashcat</code> This is the tool being used. Hashcat is a powerful password recovery tool that supports brute-force attacks, dictionary attacks, and rule-based attacks.</p>
+        <p><code>--force</code> Forces Hashcat to run even if there are compatibility warnings (e.g., related to hardware or drivers). Use this cautiously as it might override safety checks.</p>
+        <p><code>password.List</code> This is the input file containing a list of base passwords that Hashcat will modify or process. The file might include common or previously cracked passwords.</p>
+        <p><code>-r /home/kali/Downloads/ssh-password/custom.rule</code></p>
+        <ul>
+            <li><code>-r</code> specifies a rule file.</li>
+            <li><code>/home/kali/Downloads/ssh-password/custom.rule</code> is the path to the rule file. The rule file contains instructions for Hashcat on how to modify each password in the list (e.g., adding prefixes, suffixes, or substituting characters). This is used to generate potential password variations.</li>
+        </ul>
+        <p><code>--stdout</code> Outputs the modified password list directly to standard output (stdout) instead of running an actual attack. This allows you to see the transformed list or save it for further processing.</p>
+    </div>
+</div>

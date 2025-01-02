@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Blog Details</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Personal blog post details">
+        <meta name="author" content="Your Name">
+
+        <!-- Favicon -->
+        <link rel="icon" href="./assets/images/AS.png" type="image/gif" sizes="40x40">
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="./assets/css/blog.css" rel="stylesheet">
+    </head>
+
+<body>
+    <!-- preloader -->
+    <div id="preloader">
+        <img src="./assets/images/AS.png" alt="Preloader">
+    </div>
+    <!-- end preloader -->
+
+    <div class="wrapper">
+        <div class="content">
+            <!-- Navbar Start -->
+            <div class="container p-0">
+                <nav class="navbar navbar-expand-lg bg-secondary navbar-dark">
+                    <a href="#" class="navbar-brand d-block d-lg-none" aria-label="Navigation Menu">Navigation</a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav m-auto">
+                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="hack-the-box.html" class="nav-item nav-link">Hack The Box</a>
+                            <a href="try-hack-me.html" class="nav-item nav-link">Try Hack Me</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- Navbar End -->
+
+            <!-- Page Header Start -->
+            <div class="container py-5 px-2 bg-primary">
+                <div class="row py-5 px-4">
+                    <div class="col-sm-6 text-center text-md-left">
+                        <h1 class="mb-3 mb-md-0 text-white text-uppercase font-weight-bold">Blog Detail</h1>
+                    </div>
+                    <div class="col-sm-6 text-center text-md-right">
+                        <nav aria-label="breadcrumb">
+                            <div class="d-inline-flex pt-2">
+                                <h4 class="m-0 text-white"><a class="text-white" href="try-hack-me.html">Try Hack Me</a></h4>
+                                <h4 class="m-0 text-white px-2">/</h4>
+                                <h4 class="m-0 text-white">Blog Detail</h4>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+
+            <!-- Blog Detail Start -->
+            <div class="container py-5 px-2 bg-white">
+                <div class="row px-4">
+                    <div class="col-12" id="blogContent">
+                        <!-- Loading spinner -->
+                        <div class="text-center py-5" role="status" aria-label="Loading content">
+                            <div class="spinner-border text-primary">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="module">
+            import { formatDate } from './helpers/formateDate.js';
+            
+            document.addEventListener('DOMContentLoaded', async function() {
+                const blogContentEl = document.getElementById('blogContent');
+                
+                try {
+                    // Get and validate post ID
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const postId = parseInt(urlParams.get('id'));
+                    
+                    if (!postId || isNaN(postId)) {
+                        throw new Error('Invalid or missing blog post ID');
+                    }
+
+                    // Fetch blog posts with error handling
+                    const response = await fetch('./data/tryHackMe.json');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const posts = await response.json();
+                    const post = posts.find(p => p.id === postId);
+
+                    if (!post) {
+                        throw new Error('Blog post not found');
+                    }
+
+                    if (!post.isActive) {
+                        throw new Error('This blog post is currently unavailable');
+                    }
+
+                    // Create a temporary container to safely parse HTML content
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = post.content;
+
+                    // Update page content
+                    blogContentEl.innerHTML = `
+                        <article>
+                            <img class="img-fluid mb-4" src="${post.image}" alt="${post.title}">
+                            <h2 class="mb-3 font-weight-bold">${post.title}</h2>
+                            <div class="d-flex mb-4">
+                                <p class="mr-3 text-muted"><i class="fa fa-calendar-alt"></i> ${formatDate(post.date)}</p>
+                                <p class="mr-3 text-muted"><i class="fa fa-folder"></i> ${post.category}</p>
+                            </div>
+                            <div class="blog-content">
+                                ${post.content}
+                            </div>
+                        </article>
+                    `;
+
+                    // Update page metadata
+                    document.title = `${post.title} - Blog Detail`;
+                    const metaDesc = document.querySelector('meta[name="description"]');
+                    if (metaDesc) {
+                        metaDesc.setAttribute('content', `Read about ${post.title}`);
+                    }
+
+                } catch (error) {
+                    console.error('Error loading blog post:', error);
+                    
+                    blogContentEl.innerHTML = `
+                        <div class="text-center py-5">
+                            <p class="h4 text-danger">Error Loading Content</p>
+                            <p class="text-muted">${error.message}</p>
+                            <a href="try-hack-me.html" class="btn btn-primary mt-3">Return to Try Hack Me</a>
+                        </div>`;
+                }
+            });
+            </script>
+            <!-- Blog Detail End -->
+                
+            <!-- Footer Start -->
+            <footer class="container py-4 bg-secondary text-center">
+                <p class="m-0 text-white">
+                    &copy; <a class="text-white font-weight-bold" href="#">Your Site Name</a>. All Rights Reserved.
+                </p>
+            </footer>
+            <!-- Footer End -->
+        </div>
+    </div>
+        
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top" aria-label="Back to top"><i class="fa fa-angle-double-up"></i></a>
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js" defer></script>
+
+    <!-- Back to Top JavaScript -->
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.back-to-top').fadeIn('slow');
+            } else {
+                $('.back-to-top').fadeOut('slow');
+            }
+        });
+        $('.back-to-top').click(function () {
+            $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+            return false;
+        });
+    </script>
+
+    <script>
+        $(window).on("load", function(){
+            // Preloader Js
+            $("#preloader").fadeOut(1500);
+        });
+    </script>
+</body>
+</html>

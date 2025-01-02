@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Personal Blog</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Personal blog showcasing articles and thoughts">
+        <meta name="author" content="Your Name">
+
+        <!-- Favicon -->
+        <link rel="icon" href="./assets/images/AS.png" type="image/gif" sizes="40x40">
+
+        <!-- Google Fonts - Preconnect for performance -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+        <!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="./assets/css/blog.css" rel="stylesheet">
+    </head>
+
+<body>
+    <!-- preloader -->
+    <div id="preloader">
+        <img src="./assets/images/AS.png" alt="Preloader">
+    </div>
+    <!-- end preloader -->
+
+    <div class="wrapper">
+        <div class="content">
+            <!-- Navbar Start -->
+            <div class="container p-0">
+                <nav class="navbar navbar-expand-lg bg-secondary navbar-dark">
+                    <a href="#" class="navbar-brand d-block d-lg-none" aria-label="Navigation Menu">Navigation</a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav m-auto">
+                            <a href="index.html" class="nav-item nav-link">Home</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- Navbar End -->
+
+            <!-- Page Header Start -->
+            <div class="container py-5 px-2 bg-primary">
+                <div class="row py-5 px-4">
+                    <div class="col-sm-6 text-center text-md-left">
+                        <h1 class="mb-3 mb-md-0 text-white text-uppercase font-weight-bold">Try Hack Me</h1>
+                    </div>
+                    <div class="col-sm-6 text-center text-md-right">
+                        <nav aria-label="breadcrumb">
+                            <div class="d-inline-flex pt-2">
+                                <h4 class="m-0 text-white"><a class="text-white" href="index.html">Home</a></h4>
+                                <h4 class="m-0 text-white px-2">/</h4>
+                                <h4 class="m-0 text-white">My Blog</h4>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+                
+            <!-- Blog List Start -->
+            <div class="container bg-white pt-5">
+                <script type="module">
+                    import { formatDate } from './helpers/formateDate.js';
+                    
+                    (() => {
+                        // Constants
+                        const API_ENDPOINT = './data/tryHackMe.json';
+                        const FETCH_OPTIONS = {
+                            method: 'GET',
+                            headers: { 'Accept': 'application/json' },
+                            mode: 'cors',
+                            cache: 'no-cache'
+                        };
+                        const POSTS_PER_PAGE = 10;
+                        let currentPage = 1;
+                        let allPosts = [];
+
+                        // Helper functions
+                        const createBlogPostElement = (post) => {
+                            const sanitizeHTML = (str) => {
+                                const div = document.createElement('div');
+                                div.textContent = str;
+                                return div.innerHTML;
+                            };
+
+                            return `
+                                <div class="row blog-item px-3 pb-5">
+                                    <div class="col-md-5">
+                                        <img class="img-fluid mb-4 mb-md-0" loading="lazy" src="${sanitizeHTML(post.image)}" alt="${sanitizeHTML(post.title)}">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <h3 class="mt-md-4 px-md-3 mb-2 py-2 bg-white font-weight-bold">${sanitizeHTML(post.title)}</h3>
+                                        <div class="d-flex mb-3">
+                                            <p class="mr-3 text-muted"><i class="fa fa-calendar-alt"></i> ${sanitizeHTML(formatDate(post.date))}</p>
+                                            <p class="mr-3 text-muted"><i class="fa fa-folder"></i> ${sanitizeHTML(post.category)}</p>
+                                        </div>
+                                        <p>${sanitizeHTML(post.description)}</p>
+                                        <a class="btn btn-link p-0" href="try-hack-me-detail.html?id=${post.id}" aria-label="Read more about ${sanitizeHTML(post.title)}">
+                                            Read More <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                        };
+
+                        const createPaginationElement = (totalPages) => {
+                            let paginationHTML = `
+                                <nav aria-label="Blog pagination" class="mt-5">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                                            <button class="page-link" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
+                                        </li>`;
+
+                            for (let i = 1; i <= totalPages; i++) {
+                                paginationHTML += `
+                                    <li class="page-item ${currentPage === i ? 'active' : ''}">
+                                        <button class="page-link" data-page="${i}">${i}</button>
+                                    </li>`;
+                            }
+
+                            paginationHTML += `
+                                        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                                            <button class="page-link" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+                                        </li>
+                                    </ul>
+                                </nav>`;
+
+                            return paginationHTML;
+                        };
+
+                        const showError = (error, container) => {
+                            console.error('Error loading blog posts:', error);
+                            container.innerHTML = `
+                                <div class="text-center py-5">
+                                    <p class="h4 text-danger">Error Loading Content</p>
+                                    <p class="text-muted">${error.message}</p>
+                                    <button class="btn btn-primary mt-3" onclick="location.reload()">Try Again</button>
+                                </div>`;
+                        };
+
+                        const displayPosts = (posts, container) => {
+                            const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+                            const endIndex = startIndex + POSTS_PER_PAGE;
+                            const paginatedPosts = posts.slice(startIndex, endIndex);
+                            const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+
+                            container.innerHTML = '';
+                            paginatedPosts.forEach(post => {
+                                container.insertAdjacentHTML('beforeend', createBlogPostElement(post));
+                            });
+
+                            container.insertAdjacentHTML('beforeend', createPaginationElement(totalPages));
+
+                            // Add pagination event listeners
+                            container.querySelectorAll('.pagination button').forEach(button => {
+                                button.addEventListener('click', (e) => {
+                                    const newPage = parseInt(e.target.dataset.page);
+                                    if (newPage && newPage !== currentPage) {
+                                        currentPage = newPage;
+                                        displayPosts(posts, container);
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    }
+                                });
+                            });
+                        };
+
+                        // Main function
+                        const initializeBlogList = async () => {
+                            const blogPostsContainer = document.createElement('div');
+                            blogPostsContainer.id = 'blogPosts';
+                            blogPostsContainer.setAttribute('role', 'main');
+                            blogPostsContainer.innerHTML = `
+                                <div class="text-center py-5" role="status" aria-label="Loading blog posts">
+                                    <div class="spinner-border text-primary">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>`;
+
+                            const blogContainer = document.querySelector('.container.bg-white');
+                            blogContainer.appendChild(blogPostsContainer);
+
+                            try {
+                                const response = await fetch(API_ENDPOINT, FETCH_OPTIONS);
+                                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                                
+                                const blogPosts = await response.json();
+                                allPosts = blogPosts.filter(post => post.isActive);
+
+                                if (allPosts.length === 0) {
+                                    blogPostsContainer.innerHTML = `
+                                        <div class="text-center py-5">
+                                            <p>No blog posts available at this time.</p>
+                                        </div>`;
+                                    return;
+                                }
+
+                                displayPosts(allPosts, blogPostsContainer);
+
+                            } catch (error) {
+                                showError(error, blogPostsContainer);
+                            }
+                        };
+
+                        // Initialize when DOM is ready
+                        document.addEventListener('DOMContentLoaded', initializeBlogList);
+
+                        // Implement lazy loading for images
+                        const observeImages = () => {
+                            const imageObserver = new IntersectionObserver((entries, observer) => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        const img = entry.target;
+                                        if (img.dataset.src) {
+                                            img.src = img.dataset.src;
+                                            img.removeAttribute('data-src');
+                                        }
+                                        observer.unobserve(img);
+                                    }
+                                });
+                            });
+
+                            document.querySelectorAll('img[data-src]').forEach(img => {
+                                imageObserver.observe(img);
+                            });
+                        };
+
+                        // Observe images when content changes
+                        const blogPostsContainer = document.getElementById('blogPosts');
+                        if (blogPostsContainer) {
+                            new MutationObserver(observeImages).observe(blogPostsContainer, {
+                                childList: true,
+                                subtree: true
+                            });
+                        }
+                    })();
+                </script>
+            </div>
+            <!-- Blog List End -->
+                
+            <!-- Footer Start -->
+            <footer class="container py-4 bg-secondary text-center">
+                <p class="m-0 text-white">
+                    &copy; <a class="text-white font-weight-bold" href="#">Your Site Name</a>. All Rights Reserved.
+                </p>
+            </footer>
+            <!-- Footer End -->
+        </div>
+    </div>
+        
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top" aria-label="Back to top"><i class="fa fa-chevron-up"></i></a>
+        
+    <!-- Core JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+
+    <!-- Template JavaScript -->
+    <script src="js/main.js" defer></script>
+
+    <!-- Back to Top JavaScript -->
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.back-to-top').fadeIn('slow');
+            } else {
+                $('.back-to-top').fadeOut('slow');
+            }
+        });
+        $('.back-to-top').click(function () {
+            $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+            return false;
+        });
+    </script>
+
+    <script>
+        $(window).on("load", function(){
+            // Preloader Js
+            $("#preloader").fadeOut(1500);
+        });
+    </script>
+</body>
+</html>

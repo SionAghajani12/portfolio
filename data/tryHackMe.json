@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "content": "<div class='article-content'><h1>Main Title</h1><p>Introduction text with <a href='#' class='reference'>reference link</a>.</p><div class='image-gallery'><img src='/assets/images/blog/gallery1.jpg' alt='Gallery image 1' class='gallery-img'><img src='/assets/images/blog/gallery2.jpg' alt='Gallery image 2' class='gallery-img'></div><footer class='article-footer'><p>Author: John Doe</p></footer></div>",
+        "image": "/assets/images/blog/default.jpg",
+        "title": "title",
+        "description": "texts",
+        "isActive": true,
+        "date": "2024-01-28",
+        "category": "Marketing"
+    },
+    {
+        "id": 2,
+        "content": "<div class='article-content'><h1>Main Title</h1><p>Introduction text with <a href='#' class='reference'>reference link</a>.</p><div class='image-gallery'><img src='/assets/images/blog/gallery1.jpg' alt='Gallery image 1' class='gallery-img'><img src='/assets/images/blog/gallery2.jpg' alt='Gallery image 2' class='gallery-img'></div><footer class='article-footer'><p>Author: John Doe</p></footer></div>",
+        "image": "/assets/images/blog/default.jpg",
+        "title": "title",
+        "description": "description",
+        "isActive": true,
+        "date": "2024-01-28",
+        "category": "Marketing"
+    },
+    {
+        "id": 3,
+        "content": "<div class='article-content'><h1>Main Title</h1><p>Introduction text with <a href='#' class='reference'>reference link</a>.</p><div class='image-gallery'><img src='/assets/images/blog/gallery1.jpg' alt='Gallery image 1' class='gallery-img'><img src='/assets/images/blog/gallery2.jpg' alt='Gallery image 2' class='gallery-img'></div><footer class='article-footer'><p>Author: John Doe</p></footer></div>",
+        "image": "/assets/images/blog/default.jpg",
+        "title": "title",
+        "description": "description",
+        "isActive": true,
+        "date": "2024-01-28",
+        "category": "Marketing"
+    },
+    {
+        "id": 4,
+        "content": "<div class='article-content'><h1>Main Title</h1><p>Introduction text with <a href='#' class='reference'>reference link</a>.</p><div class='image-gallery'><img src='/assets/images/blog/gallery1.jpg' alt='Gallery image 1' class='gallery-img'><img src='/assets/images/blog/gallery2.jpg' alt='Gallery image 2' class='gallery-img'></div><footer class='article-footer'><p>Author: John Doe</p></footer></div>",
+        "image": "/assets/images/blog/default.jpg",
+        "title": "title",
+        "description": "description",
+        "isActive": true,
+        "date": "2024-01-28",
+        "category": "Marketing"
+    }
+]

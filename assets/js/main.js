@@ -221,3 +221,31 @@
     Author URL: https://www.designtocodes.com
     Text Domain: {{ CSume }}
 */
+
+// Add performance optimizations
+document.addEventListener('DOMContentLoaded', () => {
+  // Implement lazy loading for images
+  const lazyImages = document.querySelectorAll('img[data-src]');
+  
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        observer.unobserve(img);
+      }
+    });
+  });
+
+  lazyImages.forEach(img => imageObserver.observe(img));
+
+  // Add debounce for search/filter functions
+  const debounce = (fn, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => fn(...args), delay);
+    };
+  };
+});
